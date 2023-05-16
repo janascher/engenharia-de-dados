@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "engenharia-de-dados"
+version = "0.1.0"
+description = "\"Estudando o módulo Engenharia de Dados na ALpha EdTech.\""
+authors = ["Janaína Scher <janainascher@protonmail.com>"]
+readme = "README.md"
+packages = [{include = "engenharia_de_dados"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
