@@ -7,8 +7,6 @@
 	</h1>
 </div>
 
----
-
 ## 🧐 Sobre o curso
 
 Repositório criado para registrar as resoluções dos exercícios relacionados ao módulo de Engenharia de Dados da Alpha EdTech, administrado pelo professor Pedro Cleto.
