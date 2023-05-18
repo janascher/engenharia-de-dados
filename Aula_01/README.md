@@ -1,4 +1,4 @@
-## 📝 Exercício da Aula 01.1 - Introdução a Engenharia de Dados
+## 📝 Exercício da Aula 01 - Introdução a Engenharia de Dados parte 1
 
 ### Questão 01 - Uma empresa de telefonia opera com um banco PostgreSQL para gerir seus clientes, os produtos fornecidos para cada cliente, transações financeiras da empresa, etc. Esse banco tem capacidade de lidar muito bem tanto com a aplicação web e o aplicativo mobile. Porém, agora o time de cientistas e analistas começaram a fazer consultas diretamente no banco e estão destruindo sua performance. Por alguns minutos todas as plataformas ficam indisponíveis por conta dessas consultas. Faça uma sugestão de resolução desse problema. Ela deve ser o mais completa possível, citando cada etapa com detalhes. Não economize palavras.
 
