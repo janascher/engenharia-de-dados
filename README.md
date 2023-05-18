@@ -15,6 +15,7 @@ Repositório criado para registrar as resoluções dos exercícios relacionados 
 
 -   Introdução a Engenharia de Dados
 -   Introdução ao Pandas
+-   Pandas
 
 ## 🦸 Autor
 
