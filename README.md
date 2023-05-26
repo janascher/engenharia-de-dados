@@ -16,6 +16,10 @@ Repositório criado para registrar as resoluções dos exercícios relacionados 
 -   Introdução a Engenharia de Dados
 -   Introdução ao Pandas
 -   Pandas
+-   Manipulação e limpeza de dados com Pandas
+-   Data Lake
+-   Data Warehouse
+-   Google Cloud Storage & BigQuery
 
 ## 🦸 Autor
 
