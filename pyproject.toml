@@ -12,6 +12,7 @@ pandas = "^2.0.1"
 google-cloud-storage = "^2.9.0"
 fsspec = "^2023.5.0"
 gcsfs = "^2023.5.0"
+pandas-gbq = "^0.19.2"
 
 
 [build-system]
