@@ -20,6 +20,8 @@ Repositório criado para registrar as resoluções dos exercícios relacionados 
 -   Data Lake
 -   Data Warehouse
 -   Google Cloud Storage & BigQuery
+-   Introdução ao Spark
+-   Leitura, escrita, inspeção e manipulação de dados com PySpark
 
 ## 🦸 Autor
 
