@@ -1,42 +1,53 @@
-from pyspark.sql import DataFrame, SparkSession
+import pyspark.sql.functions as f
+from pyspark.sql import SparkSession
 
-spark = (
-    SparkSession.builder.config('spark.driver.host', 'localhost')
-    .appName('SparkSQL')
-    .getOrCreate()
-)
+spark = SparkSession.builder.appName('marge_files').getOrCreate()
 
 # Caminho dos arquivos limpos
 cleaned_chicago_house_price = "Aula_11/data/processed/cleaned_chicago_house_price"
 cleaned_chicago_built = "Aula_11/data/processed/cleaned_chicago_built"
 
-# Leitura dos arquivos CSV limpos
-df_chicago_house_price = spark.read.csv(
-    cleaned_chicago_house_price, header=True, inferSchema=True)
-df_chicago_built = spark.read.csv(
-    cleaned_chicago_built, header=True, inferSchema=True)
+# Leitura dos arquivos CSV particionados
+df_chicago_house_price = spark.read.format('csv').option(
+    'header', True).load(cleaned_chicago_house_price)
+df_chicago_built = spark.read.format('csv').option(
+    'header', True).load(cleaned_chicago_built)
 
-# Merge dos DataFrames
-df_merged = df_chicago_house_price.join(df_chicago_built, on='price', how='inner')
-print(df_merged)
+# Une os DataFrames em um único DataFrame
+df_merged = df_chicago_house_price.join(
+    df_chicago_built, on='price', how='inner')
 
-
-# df_merged = pd.merge(df_chicago_house_price, df_chicago_built, on='Price')
-# print(df_merged)
+# Seleciona todas as colunas do DataFrame resultante
+all_columns = [f.col(column) for column in df_merged.columns]
+# Exibe o DataFrame resultante
+df_merged.select(all_columns).show()
 """
-     Price  Bedroom   Space  Room   Lot     Tax  Bathroom  Garage  Condition  YearBuilt Location
-0     53.0      2.0   967.0   5.0  39.0   652.0       1.5     0.0        0.0     1995.0  Chicago
-1     53.0      2.0   967.0   5.0  39.0   652.0       1.5     0.0        0.0     2002.0  Chicago
-2     53.0      2.0   636.0   6.0  30.0   553.0       1.0     2.0        1.0     1995.0  Chicago
-3     53.0      2.0   636.0   6.0  30.0   553.0       1.0     2.0        1.0     2002.0  Chicago
-4     53.0      3.0   673.0   6.0  30.0   589.0       1.0     2.0        1.0     1995.0  Chicago
-..     ...      ...     ...   ...   ...     ...       ...     ...        ...        ...      ...
-352   67.0      2.0   901.0   5.0  30.0  1373.0       1.0     1.0        0.0     2003.0  Chicago
-353   67.0      2.0  1122.0   7.0   0.0  1131.0       1.5     1.5        0.0     2003.0  Chicago
-354   68.0      4.0  1274.0   8.0  37.0     0.0       2.0     2.0        0.0     2004.0  Chicago
-355   37.0      5.0  1204.0   7.0  25.0   531.0       1.5     0.0        0.0     1999.0  Chicago
-356   32.0      4.0  1065.0   7.0  25.0   492.0       1.5     0.0        0.0     1999.0  Chicago
++-----+-------+-----+----+---+----+--------+------+---------+---------+--------+
+|price|bedroom|space|room|lot| tax|bathroom|garage|condition|yearbuilt|location|
++-----+-------+-----+----+---+----+--------+------+---------+---------+--------+
+|   46|      2|  696|   4| 30| 440|     2.0|   1.0|        0|     2002| Chicago|
+|   46|      2|  696|   4| 30| 440|     2.0|   1.0|        0|     2005| Chicago|
+|   46|      2|  696|   4| 30| 440|     2.0|   1.0|        0|     1997| Chicago|
+|   60|      2|  828|   5| 35| 913|     1.5|   1.0|        0|     1999| Chicago|
+|   60|      2|  828|   5| 35| 913|     1.5|   1.0|        0|     1995| Chicago|
+|   62|      4|  951|   7| 30| 895|     2.0|   1.0|        0|     2003| Chicago|
+|   62|      4|  951|   7| 30| 895|     2.0|   1.0|        0|     2001| Chicago|
+|   46|      2|  856|   5| 27| 745|     1.0|   0.0|        1|     2002| Chicago|
+|   46|      2|  856|   5| 27| 745|     1.0|   0.0|        1|     2005| Chicago|
+|   46|      2|  856|   5| 27| 745|     1.0|   0.0|        1|     1997| Chicago|
+|   57|      5| 1198|   8| 50|1244|     1.5|   0.0|        0|     2004| Chicago|
+|   47|      2|  766|   4| 30| 418|     2.0|   1.0|        0|     2003| Chicago|
+|   47|      2|  766|   4| 30| 418|     2.0|   1.0|        0|     2000| Chicago|
+|   63|      2|  933|   5| 30|1431|     1.0|   1.0|        0|     1995| Chicago|
+|   63|      2|  933|   5| 30|1431|     1.0|   1.0|        0|     2005| Chicago|
+|   85|      8| 2240|  12| 50|1200|     3.0|   2.0|        0|     1998| Chicago|
+|   85|      8| 2240|  12| 50|1200|     3.0|   2.0|        0|     2005| Chicago|
+|   56|      3|  939|   5| 35| 867|     1.5|   1.0|        0|     2007| Chicago|
+|   56|      3|  939|   5| 35| 867|     1.5|   1.0|        0|     2001| Chicago|
+|   56|      3|  939|   5| 35| 867|     1.5|   1.0|        0|     1995| Chicago|
++-----+-------+-----+----+---+----+--------+------+---------+---------+--------+
+only showing top 20 rows
 """
 
 # Escrita do resultado em um arquivo CSV
-# df_merged.to_csv('Aula_05/data/merged/result_chicago_merge.csv', index=False)
+df_merged.write.mode('overwrite').csv('Aula_11/data/merged', header=True)

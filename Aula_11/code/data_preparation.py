@@ -27,8 +27,8 @@ df_chicago_built = spark.read.csv(
 # df_chicago_built.show()
 
 # Exibindo as primeiras 5 linhas dos DataFrames
-# print("\nPrimeiras 5 linhas do DataFrame Chicago House Price:")
-# df_chicago_house_price.show(5)
+print("\nPrimeiras 5 linhas do DataFrame Chicago House Price:")
+df_chicago_house_price.show(5)
 """
 Primeiras 5 linhas do DataFrame Chicago House Price:                            
 +-----+-------+-----+----+---+----+--------+------+---------+
@@ -43,8 +43,8 @@ Primeiras 5 linhas do DataFrame Chicago House Price:
 only showing top 5 rows
 """
 
-# print("\nPrimeiras 5 linhas do DataFrame Chicago Built:")
-# df_chicago_built.show(5)
+print("\nPrimeiras 5 linhas do DataFrame Chicago Built:")
+df_chicago_built.show(5)
 """
 Primeiras 5 linhas do DataFrame Chicago Built:
 +-----+---------+--------+
@@ -60,24 +60,24 @@ only showing top 5 rows
 """
 
 # Quantidade de linhas do DataFrame
-# print("\nQuantidade de linhas do DataFrame Chicago House Price:")
-# print(df_chicago_house_price.count())
+print("\nQuantidade de linhas do DataFrame Chicago House Price:")
+print(df_chicago_house_price.count())
 """
 Quantidade de linhas do DataFrame Chicago House Price:
 158
 """
 
 # Quantidade de linhas do DataFrame
-# print("\nQuantidade de linhas do DataFrame Chicago Built:")
-# print(df_chicago_built.count())
+print("\nQuantidade de linhas do DataFrame Chicago Built:")
+print(df_chicago_built.count())
 """
 Quantidade de linhas do DataFrame Chicago Built:
 103
 """
 
 # Exibir a estrutura do DataFrame
-# print("\nInformações da estrutura do DataFrame Chicago House Price:")
-# df_chicago_house_price.printSchema()
+print("\nInformações da estrutura do DataFrame Chicago House Price:")
+df_chicago_house_price.printSchema()
 """
 Informações da estrutura do DataFrame Chicago House Price:
 root
@@ -93,8 +93,8 @@ root
 """
 
 # Exibir a estrutura do DataFrame
-# print("\nInformações da estrutura do DataFrame Chicago Built:")
-# df_chicago_built.printSchema()
+print("\nInformações da estrutura do DataFrame Chicago Built:")
+df_chicago_built.printSchema()
 """
 Informações da estrutura do DataFrame Chicago Built:
 root
@@ -104,8 +104,8 @@ root
 """
 
 # Exibir informações estatísticas resumidas do DataFrame
-# print("\nInformações estatísticas do DataFrame Chicago House Price:")
-# df_chicago_house_price.describe().show()
+print("\nInformações estatísticas do DataFrame Chicago House Price:")
+df_chicago_house_price.describe().show()
 """
 Informações estatísticas do DataFrame Chicago House Price:
 23/06/13 16:28:44 WARN package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
@@ -121,8 +121,8 @@ Informações estatísticas do DataFrame Chicago House Price:
 """
 
 # Exibir informações estatísticas resumidas do DataFrame
-# print('\nInformações estatísticas do DataFrame Chicago Built:')
-# df_chicago_built.describe().show()
+print('\nInformações estatísticas do DataFrame Chicago Built:')
+df_chicago_built.describe().show()
 """
 Informações statísticas do DataFrame Chicago Built:
 +-------+------------------+------------------+--------+                        
@@ -272,10 +272,10 @@ only showing top 20 rows
 """
 158
 """
-df_chicago_house_price_duplicated = df_chicago_house_price_filled.distinct()
+df_chicago_house_price_duplicated = df_chicago_house_price_dropped.distinct()
 # print(df_chicago_house_price_duplicated.count())
-"""   
-157
+"""
+127
 """
 
 # Removendo linhas duplicadas do DataFrame Chicago House Built
@@ -283,14 +283,14 @@ df_chicago_house_price_duplicated = df_chicago_house_price_filled.distinct()
 """
 103
 """
-df_chicago_built_duplicated = df_chicago_built_filled.distinct()
+df_chicago_built_duplicated = df_chicago_built_dropped.distinct()
 # print(df_chicago_built_duplicated.count())
 """
-86
+81
 """
 
 # Salvando DataFrame em CSV com opção de sobrescrever o arquivo
 df_chicago_house_price_duplicated.write.mode('overwrite').csv(
-    'Aula_11/data/processed/cleaned_chicago_house_price')
+    'Aula_11/data/processed/cleaned_chicago_house_price', header=True)
 df_chicago_built_duplicated.write.mode('overwrite').csv(
-    'Aula_11/data/processed/cleaned_chicago_built')
+    'Aula_11/data/processed/cleaned_chicago_built', header=True)
